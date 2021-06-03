@@ -1,5 +1,6 @@
 ﻿using InvestorHelperLibrary;
 using System;
+using System.Threading;
 
 namespace InvestorHelperStockPrice
 {
@@ -9,7 +10,7 @@ namespace InvestorHelperStockPrice
 
         static void Main(string[] args)
         {
-            
+            Welcome();
             Widget wg = new Widget();
             Menu mu = new Menu();
             
@@ -19,11 +20,25 @@ namespace InvestorHelperStockPrice
             {
                 
                 mu.menu();
-                wg.ShowWidgetsFinance();
+                wg.ShowWidgetsFinance(5);
                 exit = mu.Input(exit);
 
             }
             while (exit == false);
+        }
+
+        static void Welcome()
+        {
+            Menu.writeAt(45,15, "", 2, 0);
+            string welcomeMessage = "Welcome to Investor Helper";
+
+            for(int i = 0; i < welcomeMessage.Length; i++)
+            {
+                Console.Write(welcomeMessage[i]);
+                Thread.Sleep(100);
+            }
+            Thread.Sleep(1000);
+            Console.Clear();
         }
     }
 }

@@ -14,7 +14,7 @@ namespace InvestorHelperStockPrice
 
         static int hovedMenuValg;  // med 0-15
 
-        static string[] HovedMenuEmner = { "Valuta Calculator", "Stock Calculator", "Tax Calculator", "Nothing", "Nothing", "Nothing", "WSB tickers mentions", "Nothing", "Nothing", "Nothing", "Nothing", "Nothing", "Nothing", "Nothing", "Nothing", "Change console settings" };
+        static string[] HovedMenuEmner = { "Valuta Calculator", "Stock Calculator", "Tax Calculator", "Nothing", "Nothing", "Stock details", "WSB tickers mentions", "Nothing", "Nothing", "Nothing", "Nothing", "Nothing", "Nothing", "Nothing", "Nothing", "Change console settings" };
 
         public void setConsoleSettings(int back, int fore)
         {
@@ -23,7 +23,7 @@ namespace InvestorHelperStockPrice
             refresh = true;
         }
 
-        static void writeAt(int x, int y, string text, int foregroundcolor, int backgroundcolor) // skriv tekst i farver til position
+        public static void writeAt(int x, int y, string text, int foregroundcolor, int backgroundcolor) // skriv tekst i farver til position
         {
             ConsoleColor[] colors = { ConsoleColor.Black, ConsoleColor.White, ConsoleColor.Red, ConsoleColor.DarkYellow };
             Console.SetCursorPosition(x, y);
@@ -41,45 +41,38 @@ namespace InvestorHelperStockPrice
             Console.Clear();
             Console.CursorVisible = false;
 
-
             // kør den valgte metode
-            if (hovedMenuValg == 0)
+            switch(hovedMenuValg)
             {
-            
-
-
+                case 0:
+                    Console.WriteLine("0");
+                    break;
+                case 1:
+                    Console.WriteLine("1");
+                    break;
+                case 2:
+                    Console.WriteLine("2");
+                    break;
+                case 3:
+                    Console.WriteLine("3");
+                    break;
+                case 4:
+                    Console.WriteLine("4");
+                    break;
+                case 5:
+                    Console.WriteLine("5");
+                    break;
+                case 6:
+                    Console.WriteLine("6");
+                    break;
+                case 7:
+                    Console.WriteLine("7");
+                    break;
+                case 8:
+                    Console.WriteLine("8");
+                    break;
             }
-            else if (hovedMenuValg == 1)
-            {
-            
-
-            }
-            else if (hovedMenuValg == 2)
-            {
-               
-            }
-            else if (hovedMenuValg == 3)
-            {
-                Console.WriteLine("52");
-            }
-            else if (hovedMenuValg == 4)
-            {
-                Console.WriteLine("5");
-            }
-            else if (hovedMenuValg == 5)
-            {
-
-            }
-            else if (hovedMenuValg == 15)
-            {
-                ConsoleSettings cs = new ConsoleSettings();
-                cs.SetColor();
-            }
-
-            else
-            {
-                Console.WriteLine("Nothing");
-            }
+        
 
             Console.Title = "P1 Opgaver";
             refresh = true;
@@ -117,7 +110,6 @@ namespace InvestorHelperStockPrice
                     }
                     if (key.Key.Equals(ConsoleKey.Escape))
                         return true;
-
 
                     refresh = true;
 
