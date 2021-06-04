@@ -4,44 +4,13 @@ using System.Text;
 
 namespace InvestorHelperLibrary.StockCal
 {
-    class profitCal
+    public class StockCalculator
     {
         // TODO:
         // Lav procent/fixed tal på buy/sell commission
         // Gør mere dum sikker ( Programmet ikke crasher hvis man indtaster bogstav ) 
 
-        private int numberShares;
-        private int purchasePrice;
-        private int sellPrice;
-        private int buyCommission;
-        private int sellCommission;
-
-        private int profit;
-
-        public void startCal()
-        {
-            Console.WriteLine("Hvor mange shares har du købt?");
-            numberShares = Int32.Parse(Console.ReadLine());
-
-            Console.WriteLine("Hvad er købsprisen?");
-            purchasePrice = Int32.Parse(Console.ReadLine());
-
-            Console.WriteLine("Hvad er salgsprisen?");
-            sellPrice = Int32.Parse(Console.ReadLine());
-
-            Console.WriteLine("Hvad er købs provision?");
-            buyCommission = Int32.Parse(Console.ReadLine());
-
-            Console.WriteLine("Hvad er salgs provision?");
-            sellCommission = Int32.Parse(Console.ReadLine());
-
-            profit = stockFormula(numberShares, purchasePrice, sellPrice, buyCommission, sellCommission);
-            Console.WriteLine(profit.ToString());
-            throksodk db = new throksodk();
-            db.MariaDBMoneyWrite();
-        }
-
-        private int stockFormula(int numberS, int purchaseP, int sellP, int buyC, int sellC)
+        public int stockFormula(int numberS, int purchaseP, int sellP, int buyC, int sellC)
         {
             try
             {

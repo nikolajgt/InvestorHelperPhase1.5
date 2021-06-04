@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace InvestorHelperLibrary.ValutaAPI
 {
@@ -9,11 +10,14 @@ namespace InvestorHelperLibrary.ValutaAPI
     {
 
         List<string> stringlist = new List<string>();
-
-        public double RunEverything(string userInput, string userInput1, int userMoney)
+        public async Task<double> RunMethods(string userInput, string userInput1, int userMoney)
         {
-            RunListLeft();
-            Thread.Sleep(2000);                                                         // fix så api når at return data så ikke de andre metoder kører uden empty list
+            // dynamic list = await RunList();
+
+            foreach (var i in await RunList())
+            {
+                stringlist.Add(i);
+            }
             var valutaOne = Parser(stringlist, userInput);
             var valutaOne1 = Parser(stringlist, userInput1);
             var answer = Calculator(valutaOne, valutaOne1, userMoney);
@@ -25,14 +29,16 @@ namespace InvestorHelperLibrary.ValutaAPI
         // og laver dem om til generic list
         // Derefter display`er den listen i en Listbox
         // Den ene tager venstre den anden højre
-        public async void RunListLeft()
+        public async Task<List<string>> RunList()
         {
+            List<string> returnList = new List<string>();
             APIconn apiconn = new APIconn();
             List<object> list = await apiconn.GetJson();
             foreach (var i in list)
             {
-                stringlist.Add(i.ToString());
+                returnList.Add(i.ToString());
             }
+            return returnList;
         }
 
 
@@ -43,7 +49,6 @@ namespace InvestorHelperLibrary.ValutaAPI
 
         private double Parser(List<string> list, string userInput)
         {
-            ShowValutaConverter svc = new ShowValutaConverter();
             foreach (string i in list)
             {
                 if (i.Contains(userInput))

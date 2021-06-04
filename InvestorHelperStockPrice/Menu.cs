@@ -1,4 +1,6 @@
-﻿using InvestorHelperLibrary.ValutaAPI;
+﻿using InvestorHelperLibrary;
+using InvestorHelperLibrary.StockCal;
+using InvestorHelperLibrary.ValutaAPI;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -23,6 +25,14 @@ namespace InvestorHelperStockPrice
             refresh = true;
         }
 
+
+
+        public static void writeAtWidgets(int x, int y, int foregroundcolor) // skriv tekst i farver til position
+        {
+            ConsoleColor[] colors = { ConsoleColor.Black, ConsoleColor.White, ConsoleColor.Red, ConsoleColor.DarkYellow };
+            Console.SetCursorPosition(x, y);
+            Console.ForegroundColor = colors[foregroundcolor];
+        }
         public static void writeAt(int x, int y, string text, int foregroundcolor, int backgroundcolor) // skriv tekst i farver til position
         {
             ConsoleColor[] colors = { ConsoleColor.Black, ConsoleColor.White, ConsoleColor.Red, ConsoleColor.DarkYellow };
@@ -36,6 +46,37 @@ namespace InvestorHelperStockPrice
 
         static bool hovedMenu = true;
 
+        public async void Widgets()
+        {
+            var i = await PriceProcessor.LoadOpeningPrice("amc");
+
+            writeAtWidgets(62, 5, 2);
+            Console.WriteLine("Current Price: {0} $ ", i.financialData.currentPrice.raw.ToString());
+
+            writeAtWidgets(62, 5 + 1, 2);
+            Console.WriteLine("Previous close: {0} $");
+
+            writeAtWidgets(62, 5 + 2, 2);
+            Console.WriteLine("Shorted: {0} $");
+
+            writeAtWidgets(62, 5 + 4, 2);
+            Console.WriteLine("Shorted: {0} ");
+
+            writeAtWidgets(62, 5 + 5, 2);
+            Console.WriteLine("Shorted: {0} kr");
+
+            writeAtWidgets(62, 5 + 6, 2);
+            Console.WriteLine("Shorted: {0} kr");
+
+            writeAtWidgets(62, 5 + 8, 2);
+            Console.WriteLine("Shorted: {0} kr");
+
+            writeAtWidgets(62, 5 + 9, 2);
+            Console.WriteLine("Shorted: {0} kr");
+
+            writeAtWidgets(62, 5 + 10, 2);
+            Console.WriteLine("Shorted: {0} kr");
+        }
         static void run() // denne metode kører den relevante opgave
         {
             Console.Clear();
@@ -45,10 +86,12 @@ namespace InvestorHelperStockPrice
             switch(hovedMenuValg)
             {
                 case 0:
-                    Console.WriteLine("0");
+                    ShowValutaConverter svc = new ShowValutaConverter();
+                    svc.StartValutaCalculator();
                     break;
                 case 1:
-                    Console.WriteLine("1");
+                    ShowStockCalculator ssc = new ShowStockCalculator();
+                    ssc.StartStockCalculator();
                     break;
                 case 2:
                     Console.WriteLine("2");
@@ -63,13 +106,14 @@ namespace InvestorHelperStockPrice
                     Console.WriteLine("5");
                     break;
                 case 6:
-                    Console.WriteLine("6");
+                    
                     break;
                 case 7:
                     Console.WriteLine("7");
                     break;
                 case 8:
-                    Console.WriteLine("8");
+                    //Widget w = new Widget();
+                    //w.ShowWidgetsFinance(5);
                     break;
             }
         
@@ -120,17 +164,18 @@ namespace InvestorHelperStockPrice
             return false;
         }
 
+        private static bool hasRun;
         public void menu()
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
-
+            
             Console.CursorVisible = false;
             if (refresh == true)
                 Console.Clear(); // kan gøres smartere
 
             // Menugrafik og tekst 
             writeAt(5, 1, "                                        Nikolajs Investor Helper                                   ESC: Afslut", ForegroundColor, BackgroundColor);
-            writeAt(5, 3, "                  Menu                ", 0, 2); writeAt(60, 3, "                        Widget                         ", ForegroundColor, BackgroundColor);
+            writeAt(5, 3, "                  Menu                ", 0, 2); writeAt(60, 3, "                        Stock                         ", ForegroundColor, BackgroundColor);
             writeAt(5, 30, "Naviger: ↑↓                          Vælg: Enter                                Credits til Anders for menuen  ", ForegroundColor, BackgroundColor);
 
 

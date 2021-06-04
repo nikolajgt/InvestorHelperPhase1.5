@@ -9,22 +9,8 @@ namespace InvestorHelperStockPrice
         static bool exit;
 
         static void Main(string[] args)
-        {
-            Welcome();
-            Widget wg = new Widget();
-            Menu mu = new Menu();
-            
-            Console.SetWindowSize(120, 33);
-            Console.Title = "Investor Helper";
-            do
-            {
-                
-                mu.menu();
-                wg.ShowWidgetsFinance(5);
-                exit = mu.Input(exit);
-
-            }
-            while (exit == false);
+        {   
+            RunMenu();
         }
 
         static void Welcome()
@@ -37,8 +23,27 @@ namespace InvestorHelperStockPrice
                 Console.Write(welcomeMessage[i]);
                 Thread.Sleep(100);
             }
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
             Console.Clear();
         }
+
+        static void RunMenu()
+        {
+            Welcome();
+            Menu mu = new Menu();
+
+            Console.SetWindowSize(120, 33);
+            Console.Title = "Investor Helper";
+            
+            do
+            {
+
+                mu.menu();
+                exit = mu.Input(exit);
+
+            }
+            while (exit == false);
+        }
+
     }
 }
