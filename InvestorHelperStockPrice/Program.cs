@@ -1,6 +1,7 @@
 ﻿using InvestorHelperLibrary;
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace InvestorHelperStockPrice
 {
@@ -23,7 +24,12 @@ namespace InvestorHelperStockPrice
                 Console.Write(welcomeMessage[i]);
                 Thread.Sleep(100);
             }
-            Thread.Sleep(2000);
+            for (int t = 0; t < 3; t++)
+            {
+                Console.Write(".");
+                Thread.Sleep(200);
+            }
+            Thread.Sleep(1000);
             Console.Clear();
         }
 
@@ -37,10 +43,8 @@ namespace InvestorHelperStockPrice
             
             do
             {
-
                 mu.menu();
                 exit = mu.Input(exit);
-
             }
             while (exit == false);
         }

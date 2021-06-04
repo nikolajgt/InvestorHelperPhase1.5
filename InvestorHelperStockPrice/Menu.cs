@@ -1,5 +1,6 @@
 ﻿using InvestorHelperLibrary;
 using InvestorHelperLibrary.StockCal;
+using InvestorHelperLibrary.TaxCalculator;
 using InvestorHelperLibrary.ValutaAPI;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,11 @@ namespace InvestorHelperStockPrice
 
         static bool refresh = false;
 
+        private static bool hasRun;
+
         static int hovedMenuValg;  // med 0-15
 
-        static string[] HovedMenuEmner = { "Valuta Calculator", "Stock Calculator", "Tax Calculator", "Nothing", "Nothing", "Stock details", "WSB tickers mentions", "Nothing", "Nothing", "Nothing", "Nothing", "Nothing", "Nothing", "Nothing", "Nothing", "Change console settings" };
+        static string[] HovedMenuEmner = { "Valuta Calculator", "Stock Calculator", "Tax Calculator", "Stock Info", "Nothing", "Nothing", "WSB tickers mentions", "Nothing", "Nothing", "Nothing", "Nothing", "Nothing", "Nothing", "Nothing", "Nothing", "Change console settings" };
 
         public void setConsoleSettings(int back, int fore)
         {
@@ -25,14 +28,6 @@ namespace InvestorHelperStockPrice
             refresh = true;
         }
 
-
-
-        public static void writeAtWidgets(int x, int y, int foregroundcolor) // skriv tekst i farver til position
-        {
-            ConsoleColor[] colors = { ConsoleColor.Black, ConsoleColor.White, ConsoleColor.Red, ConsoleColor.DarkYellow };
-            Console.SetCursorPosition(x, y);
-            Console.ForegroundColor = colors[foregroundcolor];
-        }
         public static void writeAt(int x, int y, string text, int foregroundcolor, int backgroundcolor) // skriv tekst i farver til position
         {
             ConsoleColor[] colors = { ConsoleColor.Black, ConsoleColor.White, ConsoleColor.Red, ConsoleColor.DarkYellow };
@@ -46,37 +41,7 @@ namespace InvestorHelperStockPrice
 
         static bool hovedMenu = true;
 
-        public async void Widgets()
-        {
-            var i = await PriceProcessor.LoadOpeningPrice("amc");
-
-            writeAtWidgets(62, 5, 2);
-            Console.WriteLine("Current Price: {0} $ ", i.financialData.currentPrice.raw.ToString());
-
-            writeAtWidgets(62, 5 + 1, 2);
-            Console.WriteLine("Previous close: {0} $");
-
-            writeAtWidgets(62, 5 + 2, 2);
-            Console.WriteLine("Shorted: {0} $");
-
-            writeAtWidgets(62, 5 + 4, 2);
-            Console.WriteLine("Shorted: {0} ");
-
-            writeAtWidgets(62, 5 + 5, 2);
-            Console.WriteLine("Shorted: {0} kr");
-
-            writeAtWidgets(62, 5 + 6, 2);
-            Console.WriteLine("Shorted: {0} kr");
-
-            writeAtWidgets(62, 5 + 8, 2);
-            Console.WriteLine("Shorted: {0} kr");
-
-            writeAtWidgets(62, 5 + 9, 2);
-            Console.WriteLine("Shorted: {0} kr");
-
-            writeAtWidgets(62, 5 + 10, 2);
-            Console.WriteLine("Shorted: {0} kr");
-        }
+        
         static void run() // denne metode kører den relevante opgave
         {
             Console.Clear();
@@ -94,10 +59,12 @@ namespace InvestorHelperStockPrice
                     ssc.StartStockCalculator();
                     break;
                 case 2:
-                    Console.WriteLine("2");
+                    TaxCalculator tc = new TaxCalculator();
+                    tc.TaxCalculatorRun();
                     break;
                 case 3:
-                    Console.WriteLine("3");
+                    StockInformation si = new StockInformation();
+                    si.StockInfoRun();
                     break;
                 case 4:
                     Console.WriteLine("4");
@@ -109,7 +76,7 @@ namespace InvestorHelperStockPrice
                     
                     break;
                 case 7:
-                    Console.WriteLine("7");
+                    
                     break;
                 case 8:
                     //Widget w = new Widget();
@@ -164,7 +131,7 @@ namespace InvestorHelperStockPrice
             return false;
         }
 
-        private static bool hasRun;
+       
         public void menu()
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
@@ -178,7 +145,7 @@ namespace InvestorHelperStockPrice
             writeAt(5, 3, "                  Menu                ", 0, 2); writeAt(60, 3, "                        Stock                         ", ForegroundColor, BackgroundColor);
             writeAt(5, 30, "Naviger: ↑↓                          Vælg: Enter                                Credits til Anders for menuen  ", ForegroundColor, BackgroundColor);
 
-
+            
             //Splitter hovedetmenuens emner op så de står ovenover hindanden, det gælder også for submenuen. (Tror jeg)
             for (int i = 0; i <= 15; i++)
                 if (i == hovedMenuValg)
